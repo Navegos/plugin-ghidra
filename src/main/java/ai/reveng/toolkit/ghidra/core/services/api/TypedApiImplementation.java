@@ -85,6 +85,7 @@ public class TypedApiImplementation implements TypedApiInterface {
         var userAgent = "%s/%s-%s (%s) RevEng.AI_Plugin/%s".formatted(Application.getName(), Application.getApplicationVersion(), Platform.CURRENT_PLATFORM, Application.getApplicationReleaseName(), pluginVersion);
 
         apiClient.setUserAgent(userAgent);
+        apiClient.addDefaultHeader("X-RevEng-Application", userAgent);
 
         // Use a custom HTTP client to add Ghidra specific logging
         // Set withResponseBody to true if debugging issues with the API to see the full response body
