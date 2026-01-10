@@ -1244,6 +1244,9 @@ public class GhidraRevengService {
                     );
         }
 
+        /// Warning: Using this map means having to verify that the function ID has an associated function
+        ///
+        /// `getFunctionMap.get(functionID)` can return `null`
         public BiMap<TypedApiInterface.FunctionID, Function> getFunctionMap(){
             var propMap = getFunctionIDPropertyMap(this);
 

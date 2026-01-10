@@ -107,12 +107,11 @@ public class AutoUnstripDialog extends RevEngDialogComponentProvider {
             // This functionID is for the local/origin function and not the matched/neighbour function!
             var functionId = new TypedApiInterface.FunctionID(match.getFunctionId());
             var function = map.get(functionId);
-            return new GhidraRevengService.RenameResult(
-                    function,
-                    function.getName(),
-                    match.getSuggestedName()
-            );
-        }).toList();
+            if (function == null) {
+                return null;
+            }
+            return new GhidraRevengService.RenameResult(function, function.getName(), match.getSuggestedName());
+        }).filter(Objects::nonNull).toList();
         // Update results table
         updateResultsTable(currentRenameResults);
     }
