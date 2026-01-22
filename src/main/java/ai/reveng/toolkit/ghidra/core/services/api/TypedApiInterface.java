@@ -149,7 +149,7 @@ public interface TypedApiInterface {
         throw new UnsupportedOperationException("triggerAIDecompilationForFunctionID not implemented yet");
     }
 
-    default AIDecompilationStatus pollAIDecompileStatus(FunctionID functionID) {
+    default GetAiDecompilationTask pollAIDecompileStatus(FunctionID functionID) {
         throw new UnsupportedOperationException("pollAIDecompileStatus not implemented yet");
     }
 
