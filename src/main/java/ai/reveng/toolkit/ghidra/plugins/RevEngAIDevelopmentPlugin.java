@@ -1,11 +1,11 @@
 package ai.reveng.toolkit.ghidra.plugins;
 
 import ai.reveng.toolkit.ghidra.core.services.api.GhidraRevengService;
-import ai.reveng.toolkit.ghidra.core.services.api.TypedApiInterface;
 import ai.reveng.toolkit.ghidra.core.services.api.types.exceptions.APIConflictException;
 import ai.reveng.toolkit.ghidra.devplugin.RevEngMetadataProvider;
 import docking.action.builder.ActionBuilder;
 import docking.options.OptionsService;
+import ghidra.app.DeveloperPluginPackage;
 import ghidra.app.plugin.PluginCategoryNames;
 import ghidra.app.plugin.ProgramPlugin;
 import ghidra.framework.plugintool.PluginInfo;
@@ -27,20 +27,20 @@ import static ai.reveng.toolkit.ghidra.plugins.ReaiPluginPackage.DEV_TOOLING_MEN
 //@formatter:off
 @PluginInfo(
 	status = PluginStatus.STABLE,
-	packageName = ReaiPluginPackage.NAME,
-	category = PluginCategoryNames.COMMON,
+	packageName = DeveloperPluginPackage.NAME,
+	category = PluginCategoryNames.DIAGNOSTIC,
 	shortDescription = "Helper and Debug Tools for the RevEng.AI Toolkit",
 	description = "Collection of tools that are not relevant for end user use," +
 			"but are useful for developing your own scripts or debugging the RevEng.AI Toolkit",
 	servicesRequired = { OptionsService.class, GhidraRevengService.class }
 )
 //@formatter:on
-public class DevPlugin extends ProgramPlugin {
+public class RevEngAIDevelopmentPlugin extends ProgramPlugin {
 
 	private final RevEngMetadataProvider revEngMetadataProvider;
 	private GhidraRevengService apiService;
 
-	public DevPlugin(PluginTool tool) {
+	public RevEngAIDevelopmentPlugin(PluginTool tool) {
 		super(tool);
 		revEngMetadataProvider = new RevEngMetadataProvider(tool, ReaiPluginPackage.NAME);
 		tool.addComponentProvider(revEngMetadataProvider, false);
