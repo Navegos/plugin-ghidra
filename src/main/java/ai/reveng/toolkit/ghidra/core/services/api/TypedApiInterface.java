@@ -157,7 +157,7 @@ public interface TypedApiInterface {
         throw new UnsupportedOperationException("pollAIDecompileStatus not implemented yet");
     }
 
-    void renameFunction(FunctionID id, String newName);
+    void renameFunction(FunctionID id, String newName, String newNameMangled);
 
     default FunctionNameScore getNameScore(FunctionMatch match) {
         throw new UnsupportedOperationException("getNameScore not implemented yet");

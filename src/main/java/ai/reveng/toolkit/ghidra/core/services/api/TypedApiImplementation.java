@@ -469,18 +469,21 @@ public class TypedApiImplementation implements TypedApiInterface {
 
     /**
      * https://api.reveng.ai/v2/docs#tag/Functions-overview/operation/rename_function_id_v2_functions_rename__function_id__post
+     *
      * @param id
      * @param newName
+     * @param newNameMangled
      */
     @Override
-    public void renameFunction(FunctionID id, String newName) {
-        JSONObject params = new JSONObject();
-        params.put("new_name", newName);
-
-        HttpRequest request = requestBuilderForEndpoint("functions", "rename", String.valueOf(id.value()))
-                .POST(HttpRequest.BodyPublishers.ofString(params.toString()))
-                .build();
-        sendRequest(request);
+    public void renameFunction(FunctionID id, String newName, String newNameMangled) {
+        var fn = new FunctionRename();
+        fn.setNewName(newName);
+        fn.setNewMangledName(newNameMangled);
+        try {
+            functionsRenamingHistoryApi.renameFunctionId((int) id.value(), fn);
+        } catch (ApiException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

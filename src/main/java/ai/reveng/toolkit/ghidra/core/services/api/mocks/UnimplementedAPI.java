@@ -36,7 +36,7 @@ public class UnimplementedAPI implements TypedApiInterface {
     }
 
     @Override
-    public void renameFunction(FunctionID id, String newName) {
+    public void renameFunction(FunctionID id, String newName, String newNameMangled) {
 
     }
 
