@@ -137,6 +137,8 @@ public class AIDecompilationdWindow extends ComponentProviderAdapter {
         descriptionArea = new JEditorPane();
         descriptionArea.setContentType("text/html");
         descriptionArea.setEditable(false);
+        descriptionArea.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+        descriptionArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         descriptionArea.setText("No function selected or binary not analysed yet with RevEng.AI");
         headerPanel.add(descriptionArea);
 
