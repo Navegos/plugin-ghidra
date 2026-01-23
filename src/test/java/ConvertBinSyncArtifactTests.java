@@ -51,7 +51,7 @@ public class ConvertBinSyncArtifactTests extends AbstractRevEngIntegrationTest {
 
 
     @Test
-    public void testDependencyToDtm() {
+    public void testDependencyToDtm() throws GhidraRevengService.EndlessTypeParsingException {
         var mockResponse = getMockResponseFromFile("confirmmatch_fdupes_77846700.json");
         FunctionDataTypeStatus functionDataTypeStatus = FunctionDataTypeStatus.fromJson(mockResponse.getJsonData());
         var dtm = GhidraRevengService.loadDependencyDataTypes(functionDataTypeStatus.data_types().get().func_deps());

@@ -733,7 +733,14 @@ public class GhidraRevengService {
 
         // Create Data Type Manager with all dependencies
         var d = FunctionDependencies.fromOpenAPI(functionDataTypeMessage.getFuncDeps());
-        var dtm = loadDependencyDataTypes(d);
+        DataTypeManager tmpDtm = null;
+        try {
+            tmpDtm = loadDependencyDataTypes(d);
+        } catch (EndlessTypeParsingException e) {
+            Msg.error("getFunctionSignature", null, e);
+            return Optional.empty();
+        }
+        DataTypeManager dtm = tmpDtm;
 
         if (functionDataTypeMessage.getFuncTypes() == null){
             return Optional.empty();
@@ -774,7 +781,19 @@ public class GhidraRevengService {
         return Optional.of(f);
     }
 
-    public static DataTypeManager loadDependencyDataTypes(FunctionDependencies dependencies){
+    public static class EndlessTypeParsingException extends Exception {
+
+        public FunctionDependencies deps;
+        public List<Typedef> remaining;
+        private EndlessTypeParsingException(FunctionDependencies dependencies, List<Typedef> remainingTypes) {
+            super("Endless type parsing detected for function dependencies: " + dependencies);
+            deps = dependencies;
+            remaining = remainingTypes;
+
+        }
+    }
+
+    public static DataTypeManager loadDependencyDataTypes(FunctionDependencies dependencies) throws EndlessTypeParsingException{
         DataTypeManager dtm = new StandAloneDataTypeManager("transient");
 
         if (dependencies == null){
@@ -810,7 +829,9 @@ public class GhidraRevengService {
         int retries = 0;
         while (!typeDefsToAdd.isEmpty()){
             if (retries > 1000){
-                throw new RuntimeException("Dependency loading failed: %s".formatted(typeDefsToAdd));
+                dtm.endTransaction(transactionId, false);
+                dtm.close();
+                throw new EndlessTypeParsingException(dependencies, typeDefsToAdd.stream().toList());
             }
             var typeDef = typeDefsToAdd.remove();
             var path = TypePathAndName.fromString(typeDef.name());

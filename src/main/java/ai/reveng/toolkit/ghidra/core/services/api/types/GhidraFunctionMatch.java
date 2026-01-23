@@ -1,6 +1,7 @@
 package ai.reveng.toolkit.ghidra.core.services.api.types;
 
 import ai.reveng.toolkit.ghidra.core.services.api.TypedApiInterface;
+import ghidra.program.model.data.FunctionDefinitionDataType;
 import ghidra.program.model.listing.Function;
 
 /**
@@ -17,4 +18,9 @@ public record GhidraFunctionMatch(
     public TypedApiInterface.FunctionID nearest_neighbor_id() {
         return functionMatch.nearest_neighbor_id();
     }
+
+    public GhidraFunctionMatchWithSignature withSignature(FunctionDefinitionDataType sig) {
+        return new GhidraFunctionMatchWithSignature(function, functionMatch, sig);
+    }
+
 }
