@@ -94,7 +94,11 @@ public class ApplyMatchCmd implements Command<Program> {
         // If we have a service then push the name. If not then it was explicitly not provided, i.e. the caller
         // is responsible for pushing the names in batch
         if (service != null) {
-            service.getApi().renameFunction(match.functionMatch().origin_function_id(), match.functionMatch().nearest_neighbor_function_name());
+            service.getApi().renameFunction(
+                    match.functionMatch().origin_function_id(),
+                    match.functionMatch().nearest_neighbor_function_name(),
+                    match.functionMatch().nearest_neighbor_mangled_function_name()
+                    );
         }
 
 

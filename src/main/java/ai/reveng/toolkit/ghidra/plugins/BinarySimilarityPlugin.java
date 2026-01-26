@@ -20,6 +20,7 @@ import ai.reveng.toolkit.ghidra.binarysimilarity.ui.autounstrip.AutoUnstripDialo
 import ai.reveng.toolkit.ghidra.binarysimilarity.ui.collectiondialog.DataSetControlPanelComponent;
 import ai.reveng.toolkit.ghidra.binarysimilarity.ui.functionmatching.BinaryLevelFunctionMatchingDialog;
 import ai.reveng.toolkit.ghidra.binarysimilarity.ui.functionmatching.FunctionLevelFunctionMatchingDialog;
+import ai.reveng.toolkit.ghidra.binarysimilarity.ui.functionmatching.SimilarFunctionsWindow;
 import ai.reveng.toolkit.ghidra.core.RevEngAIAnalysisResultsLoaded;
 import ai.reveng.toolkit.ghidra.core.services.api.GhidraRevengService;
 import ai.reveng.toolkit.ghidra.core.services.api.TypedApiInterface;
@@ -61,6 +62,7 @@ import java.util.Arrays;
 //@formatter:on
 public class BinarySimilarityPlugin extends ProgramPlugin {
 	private final AIDecompilationdWindow decompiledWindow;
+    private final SimilarFunctionsWindow similarFunctionsWindow;
 
     private GhidraRevengService apiService;
 
@@ -83,6 +85,7 @@ public class BinarySimilarityPlugin extends ProgramPlugin {
         }
 
 		decompiledWindow.locationChanged(loc);
+        similarFunctionsWindow.locationChanged(loc);
 	}
 
 	/**
@@ -99,8 +102,10 @@ public class BinarySimilarityPlugin extends ProgramPlugin {
         decompiledWindow = new AIDecompilationdWindow(tool, REVENG_AI_NAMESPACE);
 		decompiledWindow.addToTool();
 
+        similarFunctionsWindow = new SimilarFunctionsWindow(tool);
+        similarFunctionsWindow.addToTool();
 
-		// Install Collections Control Panel
+        // Install Collections Control Panel
         DataSetControlPanelComponent collectionsComponent = new DataSetControlPanelComponent(tool, REVENG_AI_NAMESPACE);
 		collectionsComponent.addToTool();
 	}

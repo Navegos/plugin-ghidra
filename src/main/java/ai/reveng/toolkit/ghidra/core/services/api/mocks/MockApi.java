@@ -52,7 +52,7 @@ public class MockApi implements TypedApiInterface {
     }
 
     @Override
-    public void renameFunction(FunctionID id, String newName) {
+    public void renameFunction(FunctionID id, String newName, String newNameMangled) {
         
     }
 
